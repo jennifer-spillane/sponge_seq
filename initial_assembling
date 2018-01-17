@@ -1,0 +1,42 @@
+#I downloaded all the files, catted them together and renamed them so that they had their species nickname
+
+#trimming each of the sets of reads
+
+#this one is for amco (Amphimedon compressa) but was the same for the other four species also
+trimmomatic PE -threads 24 \
+-baseout amco.trim.fastq \
+/mnt/lustre/macmaneslab/jlh1023/sponges/ill_data/171215/Sample_amco/amco_1.fastq.gz \
+/mnt/lustre/macmaneslab/jlh1023/sponges/ill_data/171215/Sample_amco/amco_2.fastq.gz \
+LEADING:3 TRAILING:3 \
+ILLUMINACLIP:/mnt/lustre/macmaneslab/shared/collab/nebnext.fa:2:30:10 MINLEN:55
+
+#results after trimming each species:
+#amco
+#Input Read Pairs: 86692858 Both Surviving: 84482457 (97.45%) Forward Only Surviving: 1700563 (1.96%) Reverse Only Surviving: 444776 (0.51%) Dropped: 65062 (0.08%)
+
+#apca
+Input Read Pairs: 63919916 Both Surviving: 62282534 (97.44%) Forward Only Surviving: 1123265 (1.76%) Reverse Only Surviving: 466149 (0.73%) Dropped: 47968 (0.08%)
+
+#nier
+Input Read Pairs: 65434212 Both Surviving: 63028201 (96.32%) Forward Only Surviving: 978782 (1.50%) Reverse Only Surviving: 1233658 (1.89%) Dropped: 193571 (0.30%)
+
+#xemu
+Input Read Pairs: 71114337 Both Surviving: 69550272 (97.80%) Forward Only Surviving: 1214994 (1.71%) Reverse Only Surviving: 308724 (0.43%) Dropped: 40347 (0.06%)
+
+#haca
+Input Read Pairs: 60264125 Both Surviving: 58598499 (97.24%) Forward Only Surviving: 1288910 (2.14%) Reverse Only Surviving: 309185 (0.51%) Dropped: 67531 (0.11%)
+
+
+#Assembly with kmer values of 55, 75, and 95
+#assembly command, identical for each species
+metaspades.py --only-assembler -o amco_assembly --threads 24 --memory 500 -k 55,75,95 \
+--pe1-1 /mnt/lustre/macmaneslab/jlh1023/sponges/ill_data/171215/amco/amco_trim_1P.fastq \
+--pe1-2 /mnt/lustre/macmaneslab/jlh1023/sponges/ill_data/171215/amco/amco_trim_2P.fastq
+
+#these didn't take too long, so I also ran metaspades with the default kmer values, which are 21, 33, and 55 for this length of read (150bp)
+#command for this assembly
+metaspades.py --only-assembler -o amco_assembly --threads 24 --memory 500 \
+--pe1-1 /mnt/lustre/macmaneslab/jlh1023/sponges/ill_data/171215/amco/amco_trim_1P.fastq \
+--pe1-2 /mnt/lustre/macmaneslab/jlh1023/sponges/ill_data/171215/amco/amco_trim_2P.fastq
+#actually, amco was the only one that never finished with this command
+#all others ran fine, but amco kept running out of memory
