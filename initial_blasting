@@ -1,0 +1,27 @@
+#getting refseqs and using them to blast my metasponge contigs
+
+wget -q -O /dev/stdout ftp://ftp.ncbi.nlm.nih.gov/refseq/release/invertebrate/invertebrate.*.genomic.fna.gz | gzip -d | sed 's/>/>invert_/' >> invert.fa
+wget -q -O /dev/stdout ftp://ftp.ncbi.nlm.nih.gov/refseq/release/viral/viral.*.genomic.fna.gz | gzip -d | sed 's/>/>viral_/' >> viral.fa
+wget -q -O /dev/stdout ftp://ftp.ncbi.nlm.nih.gov/refseq/release/vertebrate_mammalian/vertebrate_mammalian.*.genomic.fna.gz | gzip -d | sed 's/>/>mammal_/' >> mammal.fa
+wget -q -O /dev/stdout ftp://ftp.ncbi.nlm.nih.gov/refseq/release/bacteria/bacteria.*.genomic.fna.gz | gzip -d | sed 's/>/>bacteria_/' >> bacteria.fa
+wget -q -O /dev/stdout ftp://ftp.ncbi.nlm.nih.gov/refseq/release/archaea/archaea.*.genomic.fna.gz | gzip -d | sed 's/>/>archaea_/' >> archaea.fa
+wget -q -O /dev/stdout ftp://ftp.ncbi.nlm.nih.gov/refseq/release/protozoa/protozoa.*.genomic.fna.gz | gzip -d | sed 's/>/>protozoan_/' >> protozoan.fa
+
+#catted these together, made a blast database from them
+makeblastdb -in *.fna -out database -dbtype nucl
+
+#blasted the contigs against the database
+cat /mnt/lustre/macmaneslab/jlh1023/sponges/ill_data/171215/amco/amco_assembly/scaffolds.fasta \
+| parallel --block 2760k --recstart '>' \
+--pipe -j 24 --round-robin --line-buffer \
+"blastn -max_target_seqs 1 -db /mnt/lustre/macmaneslab/jlh1023/sponges/database/refseq -evalue 1e-10 -num_threads 2 -outfmt '$
+| tee -a amco_blast.out
+
+#this ended up not being the right things for a number of reasons:
+#I used all of the contigs instead of the longest ones only
+#it returned many hits per contig, which I tried unsuccessfully to parse for a couple of days
+#eventually I used -max_hsps 1 -max_seqs 1 to get only one hit per contig
+#I also filtered out everything below 5000bp and blasted again.
+
+#next, I also blasted against the sponge database I had made previously, which turned up many more hits
+#and largely ones that did not overlap with the invert hits from the other database
