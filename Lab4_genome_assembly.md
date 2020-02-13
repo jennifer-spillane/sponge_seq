@@ -57,19 +57,13 @@ Everything after the `install` part is a list of things we are installing.
 > sudo apt-get -y install ruby build-essential python python-pip gdebi-core r-base git
 
 Next, we'll install Conda. Conda also manages software packages, but specifically scientific ones - we will use this all the time.
-> mkdir anaconda
->
-> cd anaconda
->
-> curl -LO https://repo.anaconda.com/archive/Anaconda3-5.1.0-Linux-x86_64.sh
->
-> bash Anaconda3-5.1.0-Linux-x86_64.sh -b -p $HOME/anaconda/install/
->
-> echo ". $HOME/anaconda/install/etc/profile.d/conda.sh" >> ~/.bashrc
->
-> source ~/.bashrc
->
-> conda update -n base conda
+> mkdir anaconda  
+> cd anaconda  
+> curl -LO https://repo.anaconda.com/archive/Anaconda3-5.1.0-Linux-x86_64.sh  
+> bash Anaconda3-5.1.0-Linux-x86_64.sh -b -p $HOME/anaconda/install/  
+> echo ". $HOME/anaconda/install/etc/profile.d/conda.sh" >> ~/.bashrc  
+> source ~/.bashrc  
+> conda update -n base conda  
 
 Now we'll make a "conda environment" that will hold all of our installations, activate it, and install the programs we'll need for today's lab. Recognize any of them?
 While we will use a very similar process during each lab, the individual programs we will install will change.
