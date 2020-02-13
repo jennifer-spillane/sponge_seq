@@ -20,6 +20,8 @@ Navigate to https://use.jetstream-cloud.org/
 
 **The steps below are for launching an instance and connecting to it, which you will do every week.**
 
+
+
 ## Launching a jetstream instance and connecting to it via the terminal
 
 1. Go back to the "Projects" tab and select the project you made earlier.
@@ -67,19 +69,14 @@ Next, we'll install Conda. Conda also manages software packages, but specificall
 
 Now we'll make a "conda environment" that will hold all of our installations, activate it, and install the programs we'll need for today's lab. Recognize any of them?
 While we will use a very similar process during each lab, the individual programs we will install will change.
-> conda create -y --name gen711
->
-> conda activate gen711
->
-> conda install -y -c bioconda spades quast
->
-> conda install -y -c bioconda -c conda-forge busco=4.0.2
->
-> cd
+> conda create -y --name gen711  
+> conda activate gen711  
+> conda install -y -c bioconda spades quast  
+> conda install -y -c bioconda -c conda-forge busco=4.0.2  
+> cd  
 
 There is one more program to install (this is an assembler that specializes in long reads) that needs to be installed differently.
-> git clone https://github.com/ruanjue/wtdbg2
->
+> git clone https://github.com/ruanjue/wtdbg2  
 > cd wtdbg2 && make
 
 Navigate back to your home directory.
@@ -100,8 +97,7 @@ PacBio data:
 
 The Illumina data has a number of files associated with it (instead of just one like the PacBio data), so we download it as a "tarball" which is just a group of multiple files that get compressed together. We've used gzipped and zipped files in the past, and this is similar. The next command is to decompress those files so that we can see them as individuals.
 Illumina data:
-> curl -LO https://s3.amazonaws.com/gen711/ecoli_data.tar.gz
->
+> curl -LO https://s3.amazonaws.com/gen711/ecoli_data.tar.gz  
 > tar -zxf ecoli_data.tar.gz
 
 ### Assembling the PacBio reads
@@ -119,33 +115,58 @@ Next there are some options to choose and parameters to set.
 - The `-i` is where the input file goes, which in this case is our PacBio reads that we downloaded.
 - Finally the `-fo` is where you put the prefix of the output file name you want. Remember last week when we made the blast database and we just gave it the first part of the filename, and then it created three different files that all had different file extensions? This will be exactly like that. The "f" part means that it will force the program to overwrite any files that already have that name, which is great if you end up needing to run it multiple times, but less great if something is already named that - be careful!
 > ./wtdbg2/wtdbg2 -x rs -g 4.6m -t 16 -i pacbio.fastq -fo long
-
+  
+  
 Consenser (this is their word, it's a new one for me):  
 You'll notice that the path is the same, but the name of the command is different for this one.  
 **Question 3:** list off the different parts of this command and say what information they give the program.  
 > ./wtdbg2/wtpoa-cns -t 24 -i long.ctg.lay.gz -fo long.ctg.fa
 
+#### Evaluating our long read assembly  
 
 Now we can evaluate the genome assembly we just made in two different ways. **Important** The output file from your last command (above) is going to be the input file of both of these two programs.  
 
-Run quast on the finished assembly. 
+Run quast on the finished assembly.  
+- The first piece of information that you give the command `quast` is the input file name (so, the name of your finished assembly). It does not have an `-i` in front of it, but it is still the same thing. Different programs just do things differently.  
+- The `-R` here is the *E. coli* reference genome, which you downloaded earlier with the two datasets.  
+- The `-o` should be pretty familiar to you by now - it is our output directory, where Quast will put all of the output files it makes.  
+- We are also giving it a number of threads to run on, and a `--gene-finding` option so that we can get some extra information in the output files.  
 > quast long.ctg.fa -R GCF_000005845.2_ASM584v2_genomic.fna.gz -o long_reads_output --threads 24 --gene-finding
-
-Run busco on the finished assembly.
+  
+  
+Run BUSCO on the finished assembly.  
+- In this command, `-m` is the "mode" that we are running BUSCO in. You could also have chosen "protein" or "transcriptome" if they were more appropriate.  
+- The `-i` and `-o` are input file and output directory, as usual.  
+- The `-l` is the database we want BUSCO to use. In this case, we want the bacterial one. It will download automatically when BUSCO starts to run.  
 > busco -m genome -i long.ctg.fa -o busco_long -l bacteria_odb10
 
 
-Now assemble the short read data
-> spades.py -t 24 -m 55 --mp1-rf -k 95  --pe1-1 ecoli_pe.1.fq  --pe1-2 ecoli_pe.2.fq  --mp1-1 nextera.1.fq  --mp1-2 nextera.2.fq  -o short_all_data
+### Assembling the Illumina reads  
+  
+This program was developed in part by the Russian man whose De Bruijn graph videos we've been watching in class. His name is Pavel Pevzner.  
+This command will take a little longer to run, so be patient. It will give you updates as it is running, and you should see if you understand some of the messages it will print to the screen.  
+Here is the SPAdes github page, if you're interested in more of the options: https://github.com/ablab/spades#sec3.2  
+- The options you see with `-pe` or `-mp` at the beginning refer to "paired end" or "mate pair" data, like we talked about in class.
+- The `-m` is a memory limit for when SPAdes is running. This will depend on what size computer you are running the program.
+- **Question 4:** Can you guess what information `-k` gives this program? You can check the github page above to see if you are right.
+- The `-o` options is specifying the output, as usual, but this time it is an output directory, so make sure you name it accordingly (and don't include a file extension).  
+> spades.py -t 24 -m 55 --mp1-rf -k 95  --pe1-1 ecoli_pe.1.fq  --pe1-2 ecoli_pe.2.fq  --mp1-1 nextera.1.fq  --mp1-2 nextera.2.fq  -o short_assembly
+  
+  
+#### Evaluating our short read assembly  
+  
+**Question 5:** Run Quast on the finished SPAdes assembly. The input file for this will be inside the output directory name you gave to SPAdes in the last command. It will always be called "scaffolds.fasta". Change the input and output file names, but make everything else identical to the quast command you ran for the PacBio assembly. Paste in the command you used to run this.  
 
-Run quast on the short reads
-> quast short_all_data/scaffolds.fasta -R GCF_000005845.2_ASM584v2_genomic.fna.gz -o short_reads_output --threads 24 --gene-finding
-
-Run busco on the short reads
-> busco -m genome -i short_all_data/scaffolds.fasta -o busco_short -l bacteria_odb10
+**Question 6:** Run BUSCO on the finished SPAdes assembly. Again, you should only have to change the input and output files, and make everything else just like it was for the PacBio assembly above. Paste in your command.  
 
 
+### Comparing the two assemblies  
 
+We will use a file from each of our evaluation commands to compare these two assemblies. For Quast, the file we want is called "report.txt" and it is inside the output directory you specified. For BUSCO, the file name is long, but begins with "short_summary" and is inside the output directory that BUSCO made using the name that you gave it.  
+
+**Question 7:** Which of the two assemblies has the better BUSCO score? Why do you think this is?
+
+**Question 8:** Which of the two assemblies has the better N50? Why do you think this is?
 
 
 
