@@ -124,7 +124,7 @@ You'll notice that the path is the same, but the name of the command is differen
 
 #### Evaluating our long read assembly  
 
-Now we can evaluate the genome assembly we just made in two different ways. **Important** The output file from your last command (above) is going to be the input file of both of these two programs.  
+Now we can evaluate the genome assembly we just made in two different ways. **Important:** The output file from your last command (above) is going to be the input file of both of these two programs.  
 
 Run quast on the finished assembly.  
 - The first piece of information that you give the command `quast` is the input file name (so, the name of your finished assembly). It does not have an `-i` in front of it, but it is still the same thing. Different programs just do things differently.  
@@ -149,7 +149,7 @@ Here is the SPAdes github page, if you're interested in more of the options: htt
 - The options you see with `-pe` or `-mp` at the beginning refer to "paired end" or "mate pair" data, like we talked about in class.
 - The `-m` is a memory limit for when SPAdes is running. This will depend on what size computer you are running the program.
 - **Question 4:** Can you guess what information `-k` gives this program? You can check the github page above to see if you are right.
-- The `-o` options is specifying the output, as usual, but this time it is an output directory, so make sure you name it accordingly (and don't include a file extension).  
+- The `-o` option is specifying the output, as usual, but this time it is an output directory, so make sure you name it accordingly (and don't include a file extension).  
 > spades.py -t 24 -m 55 --mp1-rf -k 95  --pe1-1 ecoli_pe.1.fq  --pe1-2 ecoli_pe.2.fq  --mp1-1 nextera.1.fq  --mp1-2 nextera.2.fq  -o short_assembly
   
   
