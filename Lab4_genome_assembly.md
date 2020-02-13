@@ -119,11 +119,11 @@ There are two steps, one for the actual assembly and one for making the final co
 Assembler:
 The first part of this is the relative path to the command we are going to run (you could also give it an absolute path here and it would work great).
 Next there are some options to choose and parameters to set. 
-	- The `-x rs` is specifying the sequencing tech that was used to produce the reads - this is the code for PacBio (but there are others on the website above).
-	- **Question 2:** Head to the website above (that github site) and find where it tells you what some of the options are for running this command. What does the `-g 4.6m` mean in this command?
-	- The `-t 24` is the number of "threads" we are using for this command. It's sort of the number of simultaneous processes we want going at the same time, but be careful! More is not always better! It will depend on the type of computer you are working on.
-	- The `-i` is where the input file goes, which in this case is our PacBio reads that we downloaded.
-	- Finally the `-fo` is where you put the prefix of the output file name you want. Remember last week when we made the blast database and we just gave it the first part of the filename, and then it created three different files that all had different file extensions? This will be exactly like that. The "f" part means that it will force the program to overwrite any files that already have that name, which is great if you end up needing to run it multiple times, but less great if something is already named that - be careful!
+- The `-x rs` is specifying the sequencing tech that was used to produce the reads - this is the code for PacBio (but there are others on the website above).
+- **Question 2:** Head to the website above (that github site) and find where it tells you what some of the options are for running this command. What does the `-g 4.6m` mean in this command?
+- The `-t 24` is the number of "threads" we are using for this command. It's sort of the number of simultaneous processes we want going at the same time, but be careful! More is not always better! It will depend on the type of computer you are working on.
+- The `-i` is where the input file goes, which in this case is our PacBio reads that we downloaded.
+- Finally the `-fo` is where you put the prefix of the output file name you want. Remember last week when we made the blast database and we just gave it the first part of the filename, and then it created three different files that all had different file extensions? This will be exactly like that. The "f" part means that it will force the program to overwrite any files that already have that name, which is great if you end up needing to run it multiple times, but less great if something is already named that - be careful!
 > ./wtdbg2/wtdbg2 -x rs -g 4.6m -t 16 -i pacbio.fastq -fo long
 
 Consenser (this is their word, it's a new one for me):
