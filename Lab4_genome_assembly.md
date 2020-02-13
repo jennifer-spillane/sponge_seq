@@ -58,23 +58,34 @@ Everything after the `install` part is a list of things we are installing.
 
 Next, we'll install Conda. Conda also manages software packages, but specifically scientific ones - we will use this all the time.
 > mkdir anaconda
+>
 > cd anaconda
+>
 > curl -LO https://repo.anaconda.com/archive/Anaconda3-5.1.0-Linux-x86_64.sh
+>
 > bash Anaconda3-5.1.0-Linux-x86_64.sh -b -p $HOME/anaconda/install/
+>
 > echo ". $HOME/anaconda/install/etc/profile.d/conda.sh" >> ~/.bashrc
+>
 > source ~/.bashrc
+>
 > conda update -n base conda
 
 Now we'll make a "conda environment" that will hold all of our installations, activate it, and install the programs we'll need for today's lab. Recognize any of them?
 While we will use a very similar process during each lab, the individual programs we will install will change.
 > conda create -y --name gen711
+>
 > conda activate gen711
+>
 > conda install -y -c bioconda spades quast
+>
 > conda install -y -c bioconda -c conda-forge busco=4.0.2
+>
 > cd
 
 There is one more program to install (this is an assembler that specializes in long reads) that needs to be installed differently.
 > git clone https://github.com/ruanjue/wtdbg2
+>
 > cd wtdbg2 && make
 
 Navigate back to your home directory.
@@ -96,6 +107,7 @@ PacBio data:
 The Illumina data has a number of files associated with it (instead of just one like the PacBio data), so we download it as a "tarball" which is just a group of multiple files that get compressed together. We've used gzipped and zipped files in the past, and this is similar. The next command is to decompress those files so that we can see them as individuals.
 Illumina data:
 > curl -LO https://s3.amazonaws.com/gen711/ecoli_data.tar.gz
+>
 > tar -zxf ecoli_data.tar.gz
 
 ### Assembling the PacBio reads
