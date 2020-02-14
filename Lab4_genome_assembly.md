@@ -184,6 +184,8 @@ We will use a file from each of our evaluation commands to compare these two ass
 **Question 8:** Which of the two assemblies has the better N50? Why do you think this is?
 
 
+# Terminate your instance!
+
 
 
 
