@@ -27,7 +27,7 @@ Navigate to https://use.jetstream-cloud.org/
 1. Go back to the "Projects" tab and select the project you made earlier.
 2. Click the pink "NEW" button on the left and select "Instance".
 3. Search for (or scroll down to find) the correct type of machine for your instance (Ubuntu 18_04 Devel and Docker) and click it.
-4. The third thing down on the right is "Instance Size" - adjust this to whatever size the lab protocol says. For this lab, we want an m1.medium instance.
+4. The third thing down on the right is "Instance Size" - adjust this to whatever size the lab protocol says. For this lab, we want an m1.xlarge instance.
 5. Click "Launch Instance"
 6. The instance will take a second to activate and launch fully. Sometimes it takes longer than other times. Be patient.
 7. Copy the IP address of the instance once it is available.
