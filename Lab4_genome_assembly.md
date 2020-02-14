@@ -85,11 +85,11 @@ There is one more program to install (this is an assembler that specializes in l
 > cd wtdbg2 && make
 
 
-#### A quick word about "arguments"  
+### A quick word about "arguments"  
 
 An argument is a piece of information that you give a program you want to run. This can be almost anything - a parameter it needs to know to get the analysis right, an input or output file, the path to a database the program will need, etc. These arguments can be denoted in two different ways. They can be **named** and have a "flag" associated with them: `-i` for the input file, for example. Or they can be **positional** which means that the program knows what you want it to do with that information based on the order that you give. For example, in the command `grep ">" sequence.fasta`, grep knows that `">"` is the thing you want to search for, and `sequence.fasta` is the thing you want to search inside based on the order that you gave it those pieces of information.  
 
-Another thing to know about named arguments in particular is that sometimes there will be a flag that needs something to come after it, and sometimes it is fine on it's own. For example, if `-i` stands for input file (or input directory), then you should give it a file or directory name after the flag (separated by a space). If the flag is something like `-v` in grep (that searches for the inverse of what you specify), then it functions more as a switch that you can turn on or off so that the program will behave in one way or another. The only way to know for sure is to check the manual (which for many programs, can be found online, or by typing the name of the command followed by `--help`.  
+Another thing to know about named arguments in particular is that sometimes there will be a flag that needs something to come after it, and sometimes it is fine on it's own. For example, if `-i` stands for input file (or input directory), then you should give it a file or directory name after the flag (separated by a space). If the flag is something like `-v` in grep (that searches for the inverse of what you specify), then it functions more as a switch that you can turn on or off so that the program will behave in one way or another. The only way to know for sure is to check the manual (which for many programs, can be found online, or by typing the name of the command followed by `--help`).  
 
 Try to watch for these as you go through this lab. It will help you start to know how to put commands together on your own.  
   
