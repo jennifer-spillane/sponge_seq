@@ -39,7 +39,7 @@ Navigate to https://use.jetstream-cloud.org/
 
 ### At the end of lab today you will need to terminate your instance  
 
-You can do this by clicking on the box to the left of it and then clicking on the trash button on the right side of the screen. It is extremely important that you do this, or you will continue to eat through the allocation for the entire class.  
+You can do this by clicking on the box to the left of it and then clicking on the "x" button on the right side of the screen. It is extremely important that you do this, or you will continue to eat through the allocation for the entire class.  
 
 If you think you might not finish the lab in time, I advise you to focus on running all of the commands first. The final output files we are interested in (that contain the assembly evaluation information) are not large and can easily be copied into a word document for you to look at later. There are also a couple of questions about various aspects of some of the programs, and those can also be looked up without being connected to the instance. Be strategic!
 
