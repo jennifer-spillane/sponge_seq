@@ -82,7 +82,8 @@ While we will use a very similar process during each lab, the individual program
 
 There is one more program to install (this is an assembler that specializes in long reads) that needs to be installed differently.
 > git clone https://github.com/ruanjue/wtdbg2  
-> cd wtdbg2 && make
+> cd wtdbg2 && make  
+> cd
 
 
 ### A quick word about "arguments"  
@@ -94,7 +95,7 @@ Another thing to know about named arguments in particular is that sometimes ther
 Try to watch for these as you go through this lab. It will help you start to know how to put commands together on your own.  
   
   
-Now navigate back to your home directory and we'll get into the actual lab.
+Now make sure you are in your home directory and we'll get into the actual lab.
 
 
 ## Lab 4 - Genome Assembly
